@@ -8,7 +8,6 @@ client = OpenAI(
     base_url="https://api.xiaoai.plus/v1"
 )
 
-
 def chat_answer(model, content):
     response = client.chat.completions.create(
         model=model,
@@ -18,5 +17,6 @@ def chat_answer(model, content):
         ]
     )
     return {"result": response.choices[0].message.content, "token": response.usage.total_tokens}
+
 
 print(chat_answer("gpt-4", "你好"))

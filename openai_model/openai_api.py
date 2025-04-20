@@ -8,6 +8,7 @@ client = OpenAI(
     base_url="https://api.baicaigpt.com/v1"
 )
 
+
 def ask_model(history_chat_data, is_emoji, user_id):
     if is_emoji:
 
@@ -27,7 +28,9 @@ def ask_model(history_chat_data, is_emoji, user_id):
         model="gpt-4",
         messages=messages
     )
+    print(response)
     return response.choices[0].message.content
+
 
 def analysis_model(history_chat_data, is_emoji, user_id):
     if is_emoji:
@@ -46,9 +49,10 @@ def analysis_model(history_chat_data, is_emoji, user_id):
         model="gpt-4",
         messages=messages
     )
-
+    print(response)
     return response.choices[0].message.content
 
-
-
-# print(qianfan_ask("问题；What is the past tense of the verb “to run”?, 我的回答：run。请问简要评价我的回答情况，带有许多emoji表情"))
+if __name__ == "__main__":
+    history = []
+    result = ask_model(history_chat_data=history, is_emoji=True, user_id="test")
+    print(result)

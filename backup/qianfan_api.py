@@ -40,5 +40,4 @@ def analysis_model(history_chat_data, is_emoji, user_id):
     else:
         return False
 
-
 # print(qianfan_ask("问题；What is the past tense of the verb “to run”?, 我的回答：run。请问简要评价我的回答情况，带有许多emoji表情"))

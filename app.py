@@ -7,7 +7,7 @@ from flask_cors import CORS
 from flask_pymongo import PyMongo
 
 import problem_init
-import qianfan_api
+from qianfan_model.qianfan_api_v2 import analysis_model, ask_model
 # from read_data import PROBLEM_LIST, XING_PROBLEM_LIST, XUE_PROBLEM_LIST, WEI_PROBLEM_LIST, KUA_PROBLEM_LIST
 # import pandas as pd
 import io
@@ -197,7 +197,6 @@ def xueqing_db_submit():
 @app.route('/xueqing/db/delete', methods=['POST'])
 def xueqing_db_delete():
     # 通用接口 sixplus.xueqing.willwaking.com
-
     data = request.get_json()
     serial_id = data.get('serial_id', "")
     print(serial_id)
@@ -226,7 +225,7 @@ def randon_problem():
     # index = int(request.args.get('index'))
     # problem = random.choice(PROBELM_LIST)
     data = request.get_json()
-    index = data.get('index', "")
+    # index = data.get('index', "")
     subject = data.get('subject', "")
     history = data.get("history", [])
     emoji = data.get('emoji', False)
@@ -235,7 +234,7 @@ def randon_problem():
     if not history:
         problem = problem_init.init_problem(subject)
     else:
-        problem = qianfan_api.ask_model(history, emoji, user_id)
+        problem = ask_model(history, emoji, user_id)
     # if subject == "学校生活与学术讨论":
     #     problem = XUE_PROBLEM_LIST[index % len(XUE_PROBLEM_LIST)]
     # elif subject == "兴趣爱好与日常活动":
@@ -257,13 +256,13 @@ def answer_problem():
     # 通用接口 sixplus.xueqing.willwaking.com & xueqing.willwaking.com
     data = request.get_json()
     user_id = data.get('user_id', "")
-    problem = data.get('problem', "")
-    answer = data.get('answer', "")
+    # problem = data.get('problem', "")
+    # answer = data.get('answer', "")
     history = data.get('history', [])
     emoji = data.get('emoji', False)
     # 记录使用者数据
     # 千帆大模型分析回答质量
-    analysis = qianfan_api.analysis_model(history, emoji, user_id)
+    analysis = analysis_model(history, emoji, user_id)
     # 记录机器人数据
     result = {'code': 200, 'data': analysis}
     return jsonify(result)
